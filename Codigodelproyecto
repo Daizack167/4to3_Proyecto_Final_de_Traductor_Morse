@@ -1,0 +1,432 @@
+#include <LiquidCrystal.h>
+
+int ledpin=9;
+int buzzerpin=6;
+int boton=8;
+int pausab=7;
+
+int valor=0;
+int valorpausa=0;
+float tiempo=0;
+long tiempo1=0;
+long tiempo2=0;
+float tiempo3=0;
+int vector[4]={0,0,0,0};
+int i=0;
+
+int switchvalue=0;
+int punto=300;
+int raya=500;
+int pausa=400;
+char letra;
+
+int valorb=0;
+long borr=0;
+long tiempob=0;
+
+LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
+
+void setup(){
+  lcd.begin(16, 2);
+  // Inprimir un mensaje en la pantalla LCD.
+  lcd.print("Traductor Morse");
+  
+  pinMode(ledpin,OUTPUT);
+  pinMode(buzzerpin,OUTPUT);
+  pinMode(boton,INPUT_PULLUP);
+  pinMode(pausab,INPUT_PULLUP);
+  Serial.begin (9600);
+}
+
+void loop(){
+
+if (tiempo1==0) lcd.clear();
+
+valor = digitalRead(boton);
+
+	if(valor==LOW)
+	{
+		tiempo=lecturatiempo();
+
+		if(tiempo<0.5) vector[i]=1;
+      if(tiempo>0.5) vector[i]=2;
+		i=i+1;
+	}
+
+valorpausa=digitalRead(pausab);
+
+	if(valorpausa==LOW)
+	{
+		identificacionletras();
+		i=0;
+
+		vector[0]=0; vector[1]=0; vector[2]=0; vector[3]=0;
+	
+		
+	}
+		
+ 	fletra();
+    borrar(); 
+}
+
+void fletra(){
+	
+  if(Serial.available()){
+  	letra= Serial.read();
+    Serial.print("Lectura: ");
+    Serial.println(letra);
+    lcd.clear();
+    lcd.print("Leyendo... ");
+    lcd.print(letra);
+    
+    switch(letra){
+    	case 'A':
+      	funcA();
+      	break;
+      	case 'B':
+      	funcB();
+      	break;
+      	case 'C':
+      	funcC();
+      	break;
+      	case 'D':
+      	funcD();
+      	break;
+      	case 'E':
+      	funcE();
+      	break;
+      	case 'F':
+      	funcF();
+      	break;
+      	case 'G':
+      	funcG();
+      	break;
+      	case 'H':
+      	funcH();
+      	break;
+      	case 'I':
+      	funcI();
+      	break;
+      	case 'J':
+      	funcJ();
+      	break;
+      	case 'K':
+      	funcK();
+      	break;
+      	case 'L':
+      	funcL();
+      	break;
+      	case 'M':
+      	funcM();
+      	break;
+      	case 'N':
+      	funcN();
+      	break;
+      	case 'O':
+      	funcO();
+      	break;
+      	case 'P':
+      	funcP();
+      	break;
+      	case 'Q':
+      	funcQ();
+      	break;
+      	case 'R':
+      	funcR();
+      	break;
+      	case 'S':
+      	funcS();
+      	break;
+      	case 'T':
+      	funcT();
+      	break;
+      	case 'U':
+      	funcU();
+      	break;
+      	case 'V':
+      	funcV();
+      	break;
+      	case 'W':
+      	funcW();
+      	break;
+      	case 'X':
+      	funcX();
+      	break;
+      	case 'Y':
+      	funcY();
+      	break;
+      	case 'Z':
+      	funcZ();
+      	break;
+		default:
+ 		Serial.print("Por favor, introduce una letra en mayusculas ");
+      	Serial.println("");
+      	break;
+    
+    }
+    
+  }
+
+}
+
+void fraya(){
+
+    digitalWrite(ledpin, HIGH);
+  digitalWrite(buzzerpin, HIGH);
+  delay(raya);
+  digitalWrite(ledpin, LOW);
+  digitalWrite(buzzerpin, LOW);
+  delay(pausa);
+  
+}
+
+void fpunto(){
+
+    digitalWrite(ledpin, HIGH);
+  digitalWrite(buzzerpin, HIGH);
+  delay(punto);
+  digitalWrite(ledpin, LOW);
+  digitalWrite(buzzerpin, LOW);
+  delay(pausa);
+}
+void funcA(){
+  fpunto();
+  fraya();
+  delay(pausa);
+}
+void funcB(){
+  fraya();
+  fpunto();
+  fpunto();
+  fpunto();
+  delay(pausa);
+}
+void funcC(){
+  fraya();
+  fpunto();
+  fraya();
+  fpunto();
+  delay(pausa);
+}
+void funcD(){
+
+  fraya();
+  fpunto();
+  fpunto();
+  delay(pausa);
+}
+void funcE(){
+
+  fpunto();
+  delay(pausa);
+}
+void funcF(){
+  fpunto();
+  fpunto();
+  fraya();
+  fpunto();
+  delay(pausa);
+}
+void funcG(){
+
+  fraya();
+  fraya();
+  fpunto();
+  delay(pausa);
+}
+void funcH(){
+
+  fpunto();
+  fpunto();
+  fpunto();
+  fpunto();
+  delay(pausa);
+}
+void funcI(){
+
+  fpunto();
+  fpunto();
+  delay(pausa);
+}
+void funcJ(){
+
+  fpunto();
+  fraya();
+  fraya();
+  fraya();
+  delay(pausa);
+}
+void funcK(){
+  fraya();
+  fpunto();
+  fraya();
+  delay(pausa);
+}
+void funcL(){
+  fpunto();
+  fraya();
+  fpunto();
+  fpunto();
+  delay(pausa);
+}
+void funcM(){
+  fraya();
+  fraya();
+  delay(pausa);
+}
+void funcN(){
+  fraya();
+  fpunto();
+  delay(pausa);  
+}
+void funcO(){
+  fraya();
+  fraya();
+  fraya();
+  delay(pausa);  
+}
+void funcP(){
+  fpunto();
+  fraya();
+  fraya();
+  fpunto();
+  delay(pausa);  
+}
+void funcQ(){
+  fraya();
+  fraya();
+  fpunto();
+  fraya();
+  delay(pausa); 
+}
+void funcR(){
+  fpunto();
+  fraya();
+  fpunto();
+  delay(pausa);
+}
+void funcS(){
+  fpunto();
+  fpunto();
+  fpunto();
+  delay(pausa);
+}
+void funcT(){
+  fraya();
+  delay(pausa);
+}
+void funcU(){
+  fpunto();
+  fpunto();
+  fraya();
+  delay(pausa);
+}
+void funcV(){
+  fpunto();
+  fpunto();
+  fpunto();
+  fraya();
+  delay(pausa);
+}
+void funcW(){
+  fpunto();
+  fraya();
+  fraya();
+  delay(pausa);
+}
+void funcX(){
+  fraya();
+  fpunto();
+  fpunto();
+  fraya();
+  delay(pausa); 
+}
+void funcY(){
+  fraya();
+  fpunto();
+  fraya();
+  fraya();
+  delay(pausa);
+}
+void funcZ(){
+  fraya();
+  fraya();
+  fpunto();
+  fpunto();
+  delay(pausa);
+}
+
+float lecturatiempo()
+{
+
+valor=digitalRead(boton);
+if(valor == LOW)
+{
+tiempo1=millis();
+digitalWrite(ledpin,HIGH);
+digitalWrite(buzzerpin,HIGH);
+
+	while(valor == LOW)
+	{
+		tiempo2=millis();
+		valor = digitalRead(boton);
+	}
+	tiempo3=tiempo2-tiempo1;
+	tiempo3=tiempo3/1000;
+	Serial.println(tiempo3);
+}
+if(valor==HIGH) {digitalWrite(ledpin,LOW); digitalWrite(buzzerpin,LOW);}
+return tiempo3;
+tiempo3=0;	
+
+}
+
+void identificacionletras()
+{
+  if(vector[0]==1 && vector[1]==2 && vector[2]==0 && vector[3]==0){lcd.print("A");delay(600);}
+  if(vector[0]==2 && vector[1]==1 && vector[2]==1 && vector[3]==1){lcd.print("B");delay(600);}
+  if(vector[0]==2 && vector[1]==1 && vector[2]==2 && vector[3]==1){lcd.print("C");delay(600);}
+  if(vector[0]==2 && vector[1]==1 && vector[2]==1 && vector[3]==0){lcd.print("D");delay(600);}
+  if(vector[0]==1 && vector[1]==0 && vector[2]==0 && vector[3]==0){lcd.print("E");delay(600);}
+  if(vector[0]==1 && vector[1]==1 && vector[2]==2 && vector[3]==1){lcd.print("F");delay(600);}
+  if(vector[0]==2 && vector[1]==2 && vector[2]==1 && vector[3]==0){lcd.print("G");delay(600);}
+  if(vector[0]==1 && vector[1]==1 && vector[2]==1 && vector[3]==1){lcd.print("H");delay(600);}
+  if(vector[0]==1 && vector[1]==1 && vector[2]==0 && vector[3]==0){lcd.print("I");delay(600);}
+  if(vector[0]==1 && vector[1]==2 && vector[2]==2 && vector[3]==2){lcd.print("J");delay(600);}
+  if(vector[0]==2 && vector[1]==1 && vector[2]==2 && vector[3]==0){lcd.print("K");delay(600);}
+  if(vector[0]==1 && vector[1]==2 && vector[2]==1 && vector[3]==1){lcd.print("L");delay(600);}
+  if(vector[0]==2 && vector[1]==2 && vector[2]==0 && vector[3]==0){lcd.print("M");delay(600);}
+  if(vector[0]==2 && vector[1]==1 && vector[2]==0 && vector[3]==0){lcd.print("N");delay(600);}
+  if(vector[0]==2 && vector[1]==2 && vector[2]==2 && vector[3]==0){lcd.print("O");delay(600);}
+  if(vector[0]==1 && vector[1]==2 && vector[2]==2 && vector[3]==1){lcd.print("P");delay(600);}
+  if(vector[0]==2 && vector[1]==2 && vector[2]==1 && vector[3]==2){lcd.print("Q");delay(600);}
+  if(vector[0]==1 && vector[1]==2 && vector[2]==1 && vector[3]==0){lcd.print("R");delay(600);}
+  if(vector[0]==1 && vector[1]==1 && vector[2]==1 && vector[3]==0){lcd.print("S");delay(600);}
+  if(vector[0]==2 && vector[1]==0 && vector[2]==0 && vector[3]==0){lcd.print("T");delay(600);}
+  if(vector[0]==1 && vector[1]==1 && vector[2]==2 && vector[3]==0){lcd.print("U");delay(600);}
+  if(vector[0]==1 && vector[1]==1 && vector[2]==1 && vector[3]==2){lcd.print("V");delay(600);}
+  if(vector[0]==1 && vector[1]==2 && vector[2]==2 && vector[3]==0){lcd.print("W");delay(600);}
+  if(vector[0]==2 && vector[1]==1 && vector[2]==1 && vector[3]==2){lcd.print("X");delay(600);}
+  if(vector[0]==2 && vector[1]==1 && vector[2]==2 && vector[3]==2){lcd.print("Y");delay(600);}
+  if(vector[0]==2 && vector[1]==2 && vector[2]==1 && vector[3]==1){lcd.print("Z");delay(600);}
+ 
+}
+
+void borrar()
+{
+
+valorb=digitalRead(pausab);
+
+	while(valorb == LOW)
+	{
+		tiempob=millis();
+		valorb = digitalRead(pausab);
+	}
+	borr=tiempob;
+	borr=borr/1000;
+
+	
+if(borr>1) lcd.clear();
+borr=0;	
+tiempob=0;
+}
